@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'rails', '~> 5.2.1'
+
 gem 'active_skin'
 gem 'activeadmin', '~> 1.3.0'
 gem 'activeadmin_addons'
@@ -14,7 +16,6 @@ gem 'pg', '~> 0.21'
 gem 'power-types'
 gem 'puma', '~> 3.11'
 gem 'rack-cors', '~> 0.4.0'
-gem 'rails', '~> 5.2.1'
 gem 'rails-i18n'
 gem 'sass-rails', '~> 5.0'
 gem 'spring'
