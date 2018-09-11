@@ -12,7 +12,7 @@ class DisplaysController < ApplicationController
       response.headers['Content-Type'] = 'text/event-stream'
       sse = SSE.new(response.stream)
 
-      ping = Concurrent::TimerTask.new(execution_interval: PING_INTERVAL) do
+      ping = Concurrent::TimerTask.new(execution_interval: PING_INTERVAL, run_now: true) do
         sse.write('pong', event: "display_ping")
       end
       ping.execute
