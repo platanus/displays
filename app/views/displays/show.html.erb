@@ -5,22 +5,27 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Displays — Receiver</title>
   <meta name="viewport" content="width=device-width, user-scalable=no">
-
   <style>
    .dashboard {
      width: 100vw;
      height: 100vh;
    }
   </style>
+  <script>
+    source = new EventSource('/displays/<%= @display.id %>/watch')
+
+    source.addEventListener("url_changed", function(event){
+      let data = JSON.parse(event.data)
+      $('#dashboard')[0].src = data.url
+    });
+  </script>
 </head>
 <body>
   <iframe src="<%= @display.url %>"
-          id="dashboard"
-          class="dashboard"
-          scrolling="no"
-          frameborder="0"
-          width="100vw"
-          height="100vh"
-          allowfullscreen></iframe>
+        id="dashboard"
+        class="dashboard"
+        scrolling="no"
+        frameborder="0"
+        allowfullscreen></iframe>
 </body>
 </html>

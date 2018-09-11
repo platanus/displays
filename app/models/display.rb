@@ -1,4 +1,10 @@
 class Display < ApplicationRecord
+  after_update :notify_display_changed
+
+  def notify_display_changed
+    redis = Redis.new
+    redis.publish('display:updated', self.to_json)
+  end
 end
 
 # == Schema Information
