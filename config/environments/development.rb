@@ -1,6 +1,6 @@
 Rails.application.configure do
-  config.cache_classes = false
-  config.eager_load = false
+  config.cache_classes = true
+  config.eager_load = true
   config.consider_all_requests_local = true
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
     config.action_controller.perform_caching = true
@@ -23,4 +23,5 @@ Rails.application.configure do
   config.assets.debug = true
   config.assets.quiet = true
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  config.allow_concurrency = true
 end
