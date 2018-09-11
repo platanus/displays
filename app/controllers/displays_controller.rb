@@ -1,6 +1,8 @@
 class DisplaysController < ApplicationController
   include ActionController::Live
 
+  PING_INTERVAL = 45
+
   def show
     @display = Display.find(params[:id])
   end
@@ -9,6 +11,11 @@ class DisplaysController < ApplicationController
     begin
       response.headers['Content-Type'] = 'text/event-stream'
       sse = SSE.new(response.stream)
+
+      ping = Concurrent::TimerTask.new(execution_interval: PING_INTERVAL) do
+        sse.write('pong', event: "display_ping")
+      end
+      ping.execute
 
       redis = Redis.new
       redis.subscribe('display:updated') do |on|
@@ -20,6 +27,7 @@ class DisplaysController < ApplicationController
     ensure
       sse.close
       redis.quit
+      ping.shutdown
     end
 
     render nothing: true
