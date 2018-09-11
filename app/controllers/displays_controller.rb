@@ -1,7 +1,7 @@
 class DisplaysController < ApplicationController
   include ActionController::Live
 
-  PING_INTERVAL = 45
+  PING_INTERVAL = 25
 
   def show
     @display = Display.find(params[:id])
