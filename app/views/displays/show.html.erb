@@ -14,7 +14,7 @@
   <script>
     source = new EventSource('/displays/<%= @display.id %>/watch')
 
-    source.addEventListener("url_changed", function(event){
+    source.addEventListener("display_updated", function(event){
       let data = JSON.parse(event.data)
       $('#dashboard')[0].src = data.url
     });

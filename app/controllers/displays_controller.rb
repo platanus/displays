@@ -7,14 +7,13 @@ class DisplaysController < ApplicationController
 
   def watch
     begin
-      sse = SSE.new(response.stream, event: 'time')
       response.headers['Content-Type'] = 'text/event-stream'
+      sse = SSE.new(response.stream)
 
       redis = Redis.new
       redis.subscribe('display:updated') do |on|
         on.message do |e, data|
-
-          sse.write(data, event: "url_changed")
+          sse.write(data, event: "display_updated") if from_current_display? data
         end
       end
     rescue ClientDisconnected
@@ -24,5 +23,11 @@ class DisplaysController < ApplicationController
     end
 
     render nothing: true
+  end
+
+  private
+
+  def from_current_display? _data
+    params[:id].to_i == JSON.parse(_data)['id']
   end
 end
