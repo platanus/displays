@@ -18,3 +18,7 @@ end
 #  updated_at :datetime         not null
 #  host_uuid  :string
 #
+# Indexes
+#
+#  index_displays_on_host_uuid  (host_uuid) UNIQUE
+#
