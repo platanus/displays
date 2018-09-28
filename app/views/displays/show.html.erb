@@ -6,13 +6,13 @@
   <title>Displays — Receiver</title>
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <style>
-   .dashboard {
-     width: 100vw;
-     height: 100vh;
-   }
+    .dashboard {
+      width: 100vw;
+      height: 100vh;
+    }
   </style>
   <script>
-    source = new EventSource('/displays/<%= @display.id %>/watch')
+    source = new EventSource("<%= watch_display_path(@display.host_uuid) %>")
 
     source.addEventListener("display_updated", function(event){
       let data = JSON.parse(event.data)

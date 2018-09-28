@@ -4,7 +4,8 @@ class DisplaysController < ApplicationController
   PING_INTERVAL = 25
 
   def show
-    @display = Display.find(params[:id])
+    @display = Display.where(host_uuid: params[:host_uuid])
+      .first_or_create
   end
 
   def watch
@@ -36,6 +37,6 @@ class DisplaysController < ApplicationController
   private
 
   def from_current_display? _data
-    params[:id].to_i == JSON.parse(_data)['id']
+    params[:host_uuid] == JSON.parse(_data)['host_uuid']
   end
 end
