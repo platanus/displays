@@ -34,6 +34,11 @@ class DisplaysController < ApplicationController
     render nothing: true
   end
 
+  def setup
+    @display = Display.where(host_uuid: params[:host_uuid])
+      .first_or_create
+  end
+
   private
 
   def from_current_display? _data

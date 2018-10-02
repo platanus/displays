@@ -21,11 +21,11 @@
   </script>
 </head>
 <body>
-  <iframe src="<%= @display.url %>"
-        id="dashboard"
-        class="dashboard"
-        scrolling="no"
-        frameborder="0"
-        allowfullscreen></iframe>
+  <iframe src="<%= @display.url || setup_display_path(@display.host_uuid) %>"
+          id="dashboard"
+          class="dashboard"
+          scrolling="no"
+          frameborder="0"
+          allowfullscreen></iframe>
 </body>
 </html>

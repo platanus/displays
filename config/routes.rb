@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :displays, param: :host_uuid do
     member do
       get 'watch'
+      get 'setup'
     end
   end
 
