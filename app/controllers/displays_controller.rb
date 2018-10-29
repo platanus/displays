@@ -1,6 +1,8 @@
 class DisplaysController < ApplicationController
   include ActionController::Live
 
+  decorates_assigned :display
+
   PING_INTERVAL = 25
 
   def show

@@ -12,7 +12,7 @@
     }
   </style>
   <script>
-    source = new EventSource("<%= watch_display_path(@display.host_uuid) %>")
+    source = new EventSource("<%= watch_display_path %>")
 
     source.addEventListener("display_updated", function(event){
       let data = JSON.parse(event.data)
@@ -21,7 +21,7 @@
   </script>
 </head>
 <body>
-  <iframe src="<%= @display.url || setup_display_path(@display.host_uuid) %>"
+  <iframe src="<%= display.present_url %>"
           id="dashboard"
           class="dashboard"
           scrolling="no"
