@@ -7,7 +7,7 @@ module Clockwork
   end
 
   every(2.seconds, 'display.ping', thread: true) do
-    redis = Redis.new()
+    redis = Redis.new
     redis.publish('display:ping', Time.now)
   end
 end

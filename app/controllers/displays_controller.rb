@@ -15,6 +15,9 @@ class DisplaysController < ApplicationController
         stream.write(data, event: 'display_updated') if from_current_display? data
       when 'display:ping'
         stream.write('pong', event: 'display_ping')
+      when 'display:disconnect'
+        stream.write(nil, event: 'display_disconnected')
+        stream.close
       end
     end
 
@@ -35,16 +38,17 @@ class DisplaysController < ApplicationController
   def event_stream(channel, &_block)
     response.headers['Content-Type'] = 'text/event-stream'
 
-    redis = Redis.new
     redis.psubscribe(channel) do |on|
       on.pmessage do |_, event, data|
         yield(event, data)
       end
+
+      stream.write(nil, event: 'display_connected')
     end
 
-    stream.write(nil, event: 'display_connected')
   rescue ClientDisconnected
-    logger.info("Stream closed")
+  rescue IOError
+    logger.info("Client Disconnected")
   ensure
     stream.close
     redis.quit
@@ -52,5 +56,9 @@ class DisplaysController < ApplicationController
 
   def stream
     @sse ||= SSE.new(response.stream)
+  end
+
+  def redis
+    @redis ||= Redis.new
   end
 end
