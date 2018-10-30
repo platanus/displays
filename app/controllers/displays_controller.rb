@@ -3,47 +3,61 @@ class DisplaysController < ApplicationController
 
   decorates_assigned :display
 
-  PING_INTERVAL = 25
-
   def show
     @display = Display.where(host_uuid: params[:host_uuid])
-      .first_or_create
+                      .first_or_create
   end
 
   def watch
-    begin
-      response.headers['Content-Type'] = 'text/event-stream'
-      sse = SSE.new(response.stream)
-
-      ping = Concurrent::TimerTask.new(execution_interval: PING_INTERVAL, run_now: true) do
-        sse.write('pong', event: "display_ping")
+    event_stream('display:*') do |event, data|
+      case event
+      when 'display:updated'
+        stream.write(data, event: 'display_updated') if from_current_display? data
+      when 'display:ping'
+        stream.write('pong', event: 'display_ping')
+      when 'display:disconnect'
+        stream.write(nil, event: 'display_disconnected')
+        stream.close
       end
-      ping.execute
-
-      redis = Redis.new
-      redis.subscribe('display:updated') do |on|
-        on.message do |e, data|
-          sse.write(data, event: "display_updated") if from_current_display? data
-        end
-      end
-    rescue ClientDisconnected
-    ensure
-      sse.close
-      redis.quit
-      ping.shutdown
     end
 
-    render nothing: true
+    render body: nil
   end
 
   def setup
     @display = Display.where(host_uuid: params[:host_uuid])
-      .first_or_create
+                      .first_or_create
   end
 
   private
 
-  def from_current_display? _data
+  def from_current_display?(_data)
     params[:host_uuid] == JSON.parse(_data)['host_uuid']
+  end
+
+  def event_stream(channel, &_block)
+    response.headers['Content-Type'] = 'text/event-stream'
+
+    redis.psubscribe(channel) do |on|
+      on.pmessage do |_, event, data|
+        yield(event, data)
+      end
+
+      stream.write(nil, event: 'display_connected')
+    end
+  rescue IOError
+  rescue ClientDisconnected
+    logger.info("Client Disconnected")
+  ensure
+    stream.close
+    redis.quit
+  end
+
+  def stream
+    @sse ||= SSE.new(response.stream)
+  end
+
+  def redis
+    @redis ||= Redis.new
   end
 end
