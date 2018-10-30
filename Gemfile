@@ -7,9 +7,11 @@ gem 'activeadmin', '~> 1.3.0'
 gem 'activeadmin_addons'
 gem 'aws-sdk', '~> 3'
 gem 'bootsnap', require: false
+gem 'clockwork'
 gem 'coffee-rails', '~> 4.2'
 gem 'devise'
 gem 'devise-i18n'
+gem 'draper', '3.0.1'
 gem 'enumerize'
 gem 'jbuilder', '~> 2.5'
 gem 'pg', '~> 0.21'
@@ -55,5 +57,3 @@ end
 group :production, :development, :test do
   gem 'tzinfo-data'
 end
-
-gem 'draper', '3.0.1'
