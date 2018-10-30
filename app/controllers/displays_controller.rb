@@ -45,9 +45,8 @@ class DisplaysController < ApplicationController
 
       stream.write(nil, event: 'display_connected')
     end
-
-  rescue ClientDisconnected
   rescue IOError
+  rescue ClientDisconnected
     logger.info("Client Disconnected")
   ensure
     stream.close
