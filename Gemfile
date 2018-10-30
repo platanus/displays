@@ -55,3 +55,5 @@ end
 group :production, :development, :test do
   gem 'tzinfo-data'
 end
+
+gem 'draper', '3.0.1'

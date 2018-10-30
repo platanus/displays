@@ -79,6 +79,10 @@ If you need to generate data with **development purposes**, you can customize th
 
 ## Internal dependencies
 
+### Presentation Layer
+
+This project uses [Draper](https://github.com/drapergem/draper) to add an object-oriented layer of presentation logic
+
 ### Authentication
 
 We are using the great [Devise](https://github.com/plataformatec/devise) library by [PlataformaTec](http://plataformatec.com.br/)
