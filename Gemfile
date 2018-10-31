@@ -24,6 +24,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'spring'
 gem 'strong_migrations'
 gem 'uglifier', '>= 1.3.0'
+gem 'webpacker', '>= 4.0.x'
 
 group :production do
   gem 'heroku-stage'
