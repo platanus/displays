@@ -3,7 +3,17 @@ class Display < ApplicationRecord
 
   def notify_display_changed
     redis = Redis.new
-    redis.publish('display:updated', self.to_json)
+    redis.publish('display:updated', event_data.to_json)
+  end
+
+  private
+
+  def event_data
+    {
+      name: name,
+      host_uuid: host_uuid,
+      url: decorate.present_url
+    }
   end
 end
 
