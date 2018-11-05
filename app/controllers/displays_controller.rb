@@ -9,6 +9,10 @@ class DisplaysController < ApplicationController
   end
 
   def watch
+    display = Display.find_by(host_uuid: params[:host_uuid])
+
+    stream.write(display.event_data.to_json, event: 'display_connected')
+
     event_stream('display:*') do |event, data|
       case event
       when 'display:updated'
@@ -25,8 +29,7 @@ class DisplaysController < ApplicationController
   end
 
   def setup
-    @display = Display.where(host_uuid: params[:host_uuid])
-                      .first_or_create
+    @display = Display.find_by(host_uuid: params[:host_uuid])
   end
 
   private
@@ -42,8 +45,6 @@ class DisplaysController < ApplicationController
       on.pmessage do |_, event, data|
         yield(event, data)
       end
-
-      stream.write(nil, event: 'display_connected')
     end
   rescue IOError
   rescue ClientDisconnected
