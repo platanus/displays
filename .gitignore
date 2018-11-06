@@ -29,9 +29,6 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-.rubocop.yml
-.eslintrc.json
-.sscs-lint.yml
 .env.local
 .env
 node_modules/

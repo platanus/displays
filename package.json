@@ -8,6 +8,10 @@
     "vue-template-compiler": "^2.5.17"
   },
   "devDependencies": {
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^4.7.1",
+    "stylelint": "^8.3.0",
+    "stylelint-order": "^1.0.0",
     "webpack-dev-server": "^3.1.10"
   }
 }
