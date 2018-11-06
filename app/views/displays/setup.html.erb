@@ -1,22 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Displays — Receiver</title>
-  <meta name="viewport" content="width=device-width, user-scalable=no">
-  <style>
-    .dashboard {
-      background: black;
-      color: white;
-      width: 100vw;
-      height: 100vh;
-    }
-  </style>
-</head>
-<body>
-  <div class="dashboard">
-    <h1>Please setup your display: <%= @display.host_uuid %></h1>
-  </div>
-</body>
-</html>
+<% content_for :head_includes do %>
+  <%= stylesheet_link_tag 'setup', media: 'all' %>
+<% end %>
+
+<div class="setup">
+  <h1>Please setup your display: <%= @display.host_uuid %></h1>
+</div>
