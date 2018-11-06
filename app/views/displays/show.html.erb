@@ -1,31 +1,19 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Displays — Receiver</title>
-  <meta name="viewport" content="width=device-width, user-scalable=no">
-  <style>
-    .dashboard {
-      width: 100vw;
-      height: 100vh;
-    }
-  </style>
-  <script>
-    source = new EventSource("<%= watch_display_path %>")
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Displays — Receiver</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
 
-    source.addEventListener("display_updated", function(event){
-      let data = JSON.parse(event.data)
-      $('#dashboard')[0].src = data.url
-    });
-  </script>
-</head>
-<body>
-  <iframe src="<%= display.present_url %>"
-          id="dashboard"
-          class="dashboard"
-          scrolling="no"
-          frameborder="0"
-          allowfullscreen></iframe>
-</body>
+    <%= stylesheet_link_tag 'receiver', media: 'all' %>
+
+    <%= javascript_pack_tag 'display_receiver' %>
+    <%= stylesheet_pack_tag 'display_receiver' %>
+  </head>
+  <body>
+    <div id="receiver_app">
+      <remote-iframe></remote-iframe>
+    </div>
+  </body>
 </html>
