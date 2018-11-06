@@ -6,6 +6,8 @@ class DisplaysController < ApplicationController
   def show
     @display = Display.where(host_uuid: params[:host_uuid])
                       .first_or_create
+
+    render layout: false
   end
 
   def watch
