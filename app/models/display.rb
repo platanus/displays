@@ -6,8 +6,6 @@ class Display < ApplicationRecord
     redis.publish('display:updated', event_data.to_json)
   end
 
-  private
-
   def event_data
     {
       name: name,

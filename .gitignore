@@ -29,9 +29,11 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-.rubocop.yml
-.eslintrc.json
-.sscs-lint.yml
 .env.local
 .env
 node_modules/
+/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+.yarn-integrity
