@@ -1,7 +1,7 @@
 <template>
-  <div class="display">
+  <div class="display-container">
     <iframe :src="url"
-            class="display__iframe"
+            class="display-container__iframe"
             scrolling="no"
             frameborder="0"
             allowfullscreen></iframe>
@@ -38,7 +38,7 @@ export default {
 </script>
 
 <style scoped>
-  .display__iframe {
+  .display-container__iframe {
     width: 100vw;
     height: 100vh;
   }
